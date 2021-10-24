@@ -2,15 +2,26 @@ const getRandomNum = (min, max) => {
   return Math.round(Math.random() * (max - min) + min)
 }
 
+const arrayNum = (numElements, sizeString) => {
+  let array = []
+  let randomNum = getRandomNum(2, sizeString-2)
+  
+  for(let i = 0; i <= numElements; i++) {
+    if(array[i] !== randomNum) {
+      array.push(randomNum)
+    }
+    randomNum = getRandomNum(5, sizeString-5)
+  }
+  return array
+}
+
 const createObjInMap = (sizeString, styleObj) => {
   let arrayObj = []
-  let topDoor = getRandomNum(2, sizeString-2)
-
-  console.log(sizeString)
-  console.log(topDoor)
+  let topDoor = getRandomNum(2, sizeString-3)
+  let lanterns = arrayNum(2, sizeString)
 
   if(styleObj === 'top-style1') {
-    for(let i = 1; i <= sizeString-1; i++) {
+    for(let i = 1; i <= sizeString-2; i++) {
       if(i === 1) {
         arrayObj.push('y')
       }
@@ -19,9 +30,21 @@ const createObjInMap = (sizeString, styleObj) => {
         arrayObj.push('^')
       }
 
+      if(i === lanterns[0]) {
+        arrayObj.push(')')
+      }
+
+      if(i === lanterns[1]) {
+        arrayObj.push(')')
+      }
+
+      if(i === lanterns[2]) {
+        arrayObj.push(')')
+      }
+
       arrayObj.push('c')
       
-      if(i === sizeString-1)
+      if(i === sizeString-4)
       arrayObj.push('w')
     }
   }
@@ -32,9 +55,21 @@ const createObjInMap = (sizeString, styleObj) => {
         arrayObj.push('x')
       }
 
+      if(i === lanterns[0]) {
+        arrayObj.push(')')
+      }
+
+      if(i === lanterns[1]) {
+        arrayObj.push(')')
+      }
+
+      if(i === lanterns[2]) {
+        arrayObj.push(')')
+      }
+
       arrayObj.push('d')
       
-      if(i === sizeString)
+      if(i === sizeString-3)
       arrayObj.push('z')
     }
   }
