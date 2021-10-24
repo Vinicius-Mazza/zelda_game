@@ -4,7 +4,7 @@ const getRandomNum = (min, max) => {
 
 const arrayNum = (numElements, sizeString) => {
   let array = []
-  let randomNum = getRandomNum(2, sizeString-2)
+  let randomNum = getRandomNum(2, sizeString-5)
   
   for(let i = 0; i <= numElements; i++) {
     if(array[i] !== randomNum) {
@@ -17,8 +17,9 @@ const arrayNum = (numElements, sizeString) => {
 
 const createObjInMap = (sizeString, styleObj) => {
   let arrayObj = []
-  let topDoor = getRandomNum(2, sizeString-3)
-  let lanterns = arrayNum(2, sizeString)
+  const topDoor = getRandomNum(2, sizeString-3)
+  const lanterns = arrayNum(2, sizeString-3)
+  const slicer = getRandomNum(6, sizeString-3)
 
   if(styleObj === 'top-style1') {
     for(let i = 1; i <= sizeString-2; i++) {
@@ -88,27 +89,64 @@ const createObjInMap = (sizeString, styleObj) => {
     } 
   }
 
+  if(styleObj === 'style2') {
+    for(let i = 0; i <= sizeString-2; i++) {
+      if(i === 0) {
+        arrayObj.push('a')        
+      }
+
+      if(i === slicer) {
+        arrayObj.push('*')
+      }
+
+      arrayObj.push(' ')
+      
+      if(i === sizeString-2) {
+        arrayObj.push('b')
+      }
+    } 
+  }
+
   let objects = arrayObj.toString().replace(/[^a-z ( ) } * $ %  ^ ]/g, '')
   return objects
 }
 
-export const createMap = (screenWidth, screenHeight, top, styleLevel, bottom) => {
+export const createMap = (screenWidth, screenHeight) => {
+  let top = 'top-style1'
+  let styleLevel = 'style1'
+  let bottom = 'bottom-style1'
+
   let map = []
   let numContentsInArray = (screenWidth * 18) / screenHeight
   let numElementsInArray = ((screenHeight * 32) / screenWidth) - 2
+  
   numContentsInArray -= 2
   numElementsInArray -= 2
 
-  for(let i = 1; i <= numElementsInArray; i++) {
+  let slicers = arrayNum(2, numElementsInArray)
+
+  for(let i = 1; i <= numElementsInArray-3; i++) {
     if(i === 1) {
       map.push(createObjInMap(numContentsInArray, top))
     }
 
     if(i !== 1 || i !== numElementsInArray) {
-      map.push(createObjInMap(numContentsInArray, styleLevel))      
+      if(i === slicers[0]) {
+        map.push(createObjInMap(numContentsInArray, 'style2'))
+      }
+
+      if(i === slicers[1]) {
+        map.push(createObjInMap(numContentsInArray, 'style2'))
+      }
+
+      if(i === slicers[2]) {
+        map.push(createObjInMap(numContentsInArray, 'style2'))
+      }
+
+      map.push(createObjInMap(numContentsInArray, styleLevel))
     }
 
-    if(i === numElementsInArray) {
+    if(i === numElementsInArray-3) {
       map.push(createObjInMap(numContentsInArray, bottom))
     }
   }
@@ -136,5 +174,5 @@ export const createMap = (screenWidth, screenHeight, top, styleLevel, bottom) =>
   //     'xdd)dd)ddddddddddddddddddddddddz'
   //   ]
 
-// console.log(createMap(1536, 864, 'top-style1', 'style1', 'bottom-style1'))
+console.log(createMap(1536, 864))
 // console.log(arrayTeste)

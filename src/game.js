@@ -10,10 +10,11 @@ kaboom({
 })
 
 const MOVE_SPEED = 120
-const SLICER_SPEED = 100
+const SLICER_SPEED = 300
 const SKELETOR_SEED = 60
+// const NUM_LEVELS = 5
 
-console.log(`Your screen resolution is: Width: ${screen.width}, Height: ${screen.height}`);
+// console.log(`Your screen resolution is: Width: ${screen.width}, Height: ${screen.height}`);
 
 loadRoot('img/')
 
@@ -51,7 +52,7 @@ scene("game", ({ level, score }) => {
   layers(['bg', 'obj', 'ui'], 'obj')
 
   const maps = [
-    createMap(screen.width, screen.height, 'top-style1', 'style1', 'bottom-style1'),
+    createMap(screen.width, screen.height),
     [
       'yccccccccw',
       'a        b',
@@ -181,7 +182,7 @@ scene("game", ({ level, score }) => {
     s.move(0, s.dir * SKELETOR_SEED)
     s.timer -= dt()
     if(s.timer <= 0) {
-      s.dir = - s.dir
+      s.dir = -s.dir
       s.timer = rand(5)
     }
   })
